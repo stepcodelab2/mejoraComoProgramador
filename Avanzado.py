@@ -1,5 +1,6 @@
 # Ejercicio 1: Implementar el algoritmo de búsqueda A*.
 # Solución:
+
 from heapq import heappop, heappush
 
 def astar(grafo, inicio, meta, heuristica):
@@ -807,3 +808,32 @@ def fibonacci(n):
 
 n = 10
 print("El número de Fibonacci en la posición", n, "es:", fibonacci(n))
+
+# Ejercicio 25: Implementar un algoritmo de Dijkstra para encontrar el camino más corto en un grafo.
+# Solución:
+import heapq
+
+def dijkstra(grafo, inicio):
+    distancias = {nodo: float('inf') for nodo in grafo}
+    distancias[inicio] = 0
+    cola_prioridad = [(0, inicio)]
+
+    while cola_prioridad:
+        distancia_actual, nodo_actual = heapq.heappop(cola_prioridad)
+
+        for vecino, peso in grafo[nodo_actual].items():
+            distancia = distancia_actual + peso
+
+            if distancia < distancias[vecino]:
+                distancias[vecino] = distancia
+                heapq.heappush(cola_prioridad, (distancia, vecino))
+
+    return distancias
+
+grafo = {
+    'A': {'B': 1, 'C': 4},
+    'B': {'A': 1, 'C': 2, 'D': 5},
+    'C': {'A': 4, 'B': 2, 'D': 1},
+    'D': {'B': 5, 'C': 1}
+}
+print("Distancias desde el nodo A:", dijkstra(grafo, 'A'))
